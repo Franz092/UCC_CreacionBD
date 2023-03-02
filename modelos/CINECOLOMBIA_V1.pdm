@@ -1120,7 +1120,7 @@ PhysOpts=
 
 [ModelOptions\Default Opts\JIDX]
 PhysOpts=</a:ModelOptionsText>
-<a:RepositoryFilename>C:\UCC\UCC_CreacionBD\modelos\CINECOLOMBIA_V1.apm</a:RepositoryFilename>
+<a:RepositoryFilename>C:\UCC\UCC_CreacionBD\modelos\CINECOLOMBIA_V1.pdm</a:RepositoryFilename>
 <a:ExtendedAttributesText>{3B3AB5FF-1A72-461F-BF3E-50C5C86A7DCB},SYASA16,75={753091C9-A033-4B4A-BE4C-FBF8E5A8A828},AutoFixMaterializedViewDone,4=true
 
 </a:ExtendedAttributesText>
@@ -2542,11 +2542,11 @@ LABL 0 Arial,8,N</a:FontList>
 <c:Keys>
 <o:Key Id="o74">
 <a:ObjectID>B7DF065E-658C-4D6A-AD64-BA72836C35DC</a:ObjectID>
-<a:Name>Key_1</a:Name>
-<a:Code>KEY_1</a:Code>
+<a:Name>ID_INICIAR_SESION</a:Name>
+<a:Code>ID_INICIAR_SESION</a:Code>
 <a:CreationDate>1677178171</a:CreationDate>
 <a:Creator>franc</a:Creator>
-<a:ModificationDate>1677178235</a:ModificationDate>
+<a:ModificationDate>1677540613</a:ModificationDate>
 <a:Modifier>franc</a:Modifier>
 <a:ConstraintName>PK_INICIAR_SESION</a:ConstraintName>
 <c:Key.Columns>
