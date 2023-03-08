@@ -1,1 +1,1 @@
-#Modelo de Base de Datos de CINE COLOMBIA
+#Modelo de Base de Datos CINE COLOMBIA
