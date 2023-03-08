@@ -1,1 +1,1 @@
-#Modelos de Base de Datos Banco
+#Modelo de Base de Datos BANCO
