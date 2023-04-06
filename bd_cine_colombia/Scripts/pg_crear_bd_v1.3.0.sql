@@ -1,68 +1,9 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     04/04/2023 21:43:20                          */
+/* Created on:     04/04/2023 18:02:30                          */
 /*==============================================================*/
 
 
-drop table ASIENTO;
-
-drop table CINE;
-
-drop table CINE_CARTELERAS;
-
-drop table CINE_SALAS;
-
-drop table CIUDAD;
-
-drop table CLIENTE;
-
-drop table CLIENTE_DIRECCIONES;
-
-drop table CLIENTE_EMAILS;
-
-drop table CLIENTE_REDES;
-
-drop table CLIENTE_TELEFONOS;
-
-drop table DEPARTAMENTO;
-
-drop table DISTRIBUCION;
-
-drop table DISTRIBUCION_FILMS;
-
-drop table ESTADO;
-
-drop table FACTURA;
-
-drop table FUNCION;
-
-drop table PAIS;
-
-drop table PELICULA;
-
-drop table PELICULA_CARTELERA;
-
-drop table PRODUCTO;
-
-drop table RED_SOCIAL;
-
-drop table RESERVA;
-
-drop table RESULTADO;
-
-drop table RESULTAOD_FACTURA;
-
-drop table TEATRO;
-
-drop table TIPO_ALGORITMO;
-
-drop table TIPO_DOCUMENTO;
-
-drop table TIPO_USUARIO;
-
-drop table USUARIO;
-
-drop table USUARIO_CINE;
 
 /*==============================================================*/
 /* Table: ASIENTO                                               */
@@ -128,7 +69,7 @@ create table CIUDAD (
 /* Table: CLIENTE                                               */
 /*==============================================================*/
 create table CLIENTE (
-   ID_CLIENTE           NUMERIC(20)          not null,
+   ID_CLIENTE           NUMBER(20)           not null,
    ID_TD                VARCHAR(2)           not null,
    DOCUMENTO            VARCHAR(20)          not null,
    NOMBRE               VARCHAR(30)          not null,
@@ -144,8 +85,8 @@ create table CLIENTE (
 /* Table: CLIENTE_DIRECCIONES                                   */
 /*==============================================================*/
 create table CLIENTE_DIRECCIONES (
-   ID_CLIENTE_DIRECCION NUMERIC(15)          not null,
-   ID_CLIENTE           NUMERIC(20)          not null,
+   ID_CLIENTE_DIRECCION NUMBER(15)           not null,
+   ID_CLIENTE           NUMBER(20)           not null,
    ID_CIUDAD            VARCHAR(5)           not null,
    VIA_PRINCIPAL        VARCHAR(20)          not null,
    NOMENCLATURA         VARCHAR(20)          not null,
@@ -162,8 +103,8 @@ create table CLIENTE_DIRECCIONES (
 /* Table: CLIENTE_EMAILS                                        */
 /*==============================================================*/
 create table CLIENTE_EMAILS (
-   ID_CLIENTE_EMAIL     NUMERIC(15)          not null,
-   ID_CLIENTE           NUMERIC(20)          not null,
+   ID_CLIENTE_EMAIL     NUMBER(15)           not null,
+   ID_CLIENTE           NUMBER(20)           not null,
    EMAIL                VARCHAR(100)         null,
    ESTADO               VARCHAR(1)           null default 'A'
       constraint CKC_ESTADO_CLI_EMAILS check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
@@ -177,8 +118,8 @@ create table CLIENTE_EMAILS (
 /* Table: CLIENTE_REDES                                         */
 /*==============================================================*/
 create table CLIENTE_REDES (
-   ID_CLIENTE_REDES     NUBERIC(15)          not null,
-   ID_CLIENTE           NUMERIC(20)          not null,
+   ID_CLIENTE_REDES     NUMBER(15)           not null,
+   ID_CLIENTE           NUMBER(20)           not null,
    ID_RED_SOCIAL        VARCHAR(5)           null,
    NOMBRE_PERFIL        VARCHAR(30)          null,
    ESTADO               VARCHAR(1)           null default 'A'
@@ -193,8 +134,8 @@ create table CLIENTE_REDES (
 /* Table: CLIENTE_TELEFONOS                                     */
 /*==============================================================*/
 create table CLIENTE_TELEFONOS (
-   ID_CLIENTE_TELEFONO  NUMERIC(15)          not null,
-   ID_CLIENTE           NUMERIC(20)          not null,
+   ID_CLIENTE_TELEFONO  NUMBER(15)           not null,
+   ID_CLIENTE           NUMBER(20)           not null,
    ID_PAIS              VARCHAR(3)           null,
    TELEFONO             VARCHAR(30)          null,
    ESTADO               VARCHAR(1)           null default 'A'
@@ -335,7 +276,7 @@ create table RED_SOCIAL (
 /*==============================================================*/
 create table RESERVA (
    ID_RESERVA           VARCHAR(20)          not null,
-   ID_CLIENTE           NUMERIC(20)          null,
+   ID_CLIENTE           NUMBER(20)           null,
    ID_CIUDAD            CHAR(20)             not null,
    HORA                 TIMESTAMP WITH TIME ZONE null,
    UBICACION            VARCHAR(20)          null,
