@@ -4,8 +4,6 @@
 /*==============================================================*/
 
 
-
-
 /*==============================================================*/
 /* Table: ASIENTO                                               */
 /*==============================================================*/
@@ -502,4 +500,3 @@ alter table USUARIO_CINE
 alter table USUARIO_CINE
    add constraint FK_USUARIO__REFERENCE_CINE foreign key (ID_CINE)
       references CINE (ID_CINE);
-
