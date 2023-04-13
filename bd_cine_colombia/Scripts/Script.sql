@@ -1,10 +1,58 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 12c                           */
-/* Created on:     05/04/2023 19:30:06                          */
+/* Created on:     04/04/2023 17:45:34                          */
 /*==============================================================*/
 
 
+/*==============================================================*/
+/* Table: ASIENTO                                               */
+/*==============================================================*/
+create table ASIENTO (
+   ID_ASIENTO           VARCHAR(20)           not null,
+   ID_SALA              VARCHAR(20)           not null,
+   ID_ESTADO            VARCHAR(20)           not null,
+   NUM_ASIENTO          VARCHAR(20),
+   constraint PK_ASIENTO primary key (ID_ASIENTO)
+);
 
+/*==============================================================*/
+/* Table: CINE                                                  */
+/*==============================================================*/
+create table CINE (
+   ID_CINE              VARCHAR(5)            not null,
+   ID_CIUDAD            VARCHAR(5)            not null,
+   NOMBRE               VARCHAR(40)           not null,
+   DIRECCION            VARCHAR(50)           not null,
+   TELEFONO_ADMIN       VARCHAR(30),
+   TELEFONO_CLIENTES    VARCHAR(30),
+   ESTADO               VARCHAR(1)           default 'A'
+      constraint CKC_ESTADO_CINE check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
+   constraint PK_CINE primary key (ID_CINE)
+);
+
+/*==============================================================*/
+/* Table: CINE_CARTELERAS                                       */
+/*==============================================================*/
+create table CINE_CARTELERAS (
+   ID_CARTELERA         VARCHAR(10)           not null,
+   ID_CINE              VARCHAR(5)            not null,
+   ESTADO               VARCHAR(1)           default 'A'
+      constraint CKC_ESTADO_CINE_CAR check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
+   constraint PK_CINE_CARTELERAS primary key (ID_CARTELERA)
+);
+
+/*==============================================================*/
+/* Table: CINE_SALAS                                            */
+/*==============================================================*/
+create table CINE_SALAS (
+   ID_SALA              VARCHAR(5)            not null,
+   ID_CINE              VARCHAR(5)            not null,
+   ID_TEATRO            VARCHAR(20),
+   NOMBRE               VARCHAR(30),
+   ESTADO               VARCHAR(1)           default 'A'
+      constraint CKC_ESTADO_CINE_SAL check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
+   constraint PK_CINE_SALAS primary key (ID_SALA)
+);
 
 /*==============================================================*/
 /* Table: CIUDAD                                                */
@@ -14,17 +62,6 @@ create table CIUDAD (
    ID_DEPTO             VARCHAR(2)            not null,
    NOMBRE               VARCHAR(20)           not null,
    constraint PK_CIUDAD primary key (ID_CIUDAD)
-);
-
-/*==============================================================*/
-/* Table: CLASE_PRODUCTO                                        */
-/*==============================================================*/
-create table CLASE_PRODUCTO (
-   ID_CLASE_PRODUCTO    VARCHAR(2)            not null,
-   NOMBRE               VARCHAR(20)           not null,
-   ESTADO               VARCHAR(1)           default 'A'
-      constraint CKC_ESTADO_CLASE_PR check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
-   constraint PK_CLASE_PRODUCTO primary key (ID_CLASE_PRODUCTO)
 );
 
 /*==============================================================*/
@@ -109,68 +146,6 @@ create table CLIENTE_TELEFONOS (
 );
 
 /*==============================================================*/
-/* Table: CUENTA                                                */
-/*==============================================================*/
-create table CUENTA (
-   ID_CUENTA            NUMBER(15)            not null,
-   ID_TIPO_CUENTA       VARCHAR(2)            not null,
-   ID_PAIS              VARCHAR(3)            not null,
-   ID_TIPO_USUARIO      VARCHAR(2)            not null,
-   CUE_ID_TIPO_USUARIO  VARCHAR(2)            not null,
-   MON_ID_TIPO_USUARIO  VARCHAR(3)            not null,
-   FECHA_APERTURA       TIMESTAMP WITH LOCAL TIME ZONE  not null,
-   DESCRIPCION          CHAR(10),
-   FECHA_REGISTRO       TIMESTAMP WITH TIME ZONE  not null,
-   FECHA_ACTUALIZACION  TIMESTAMP WITH TIME ZONE,
-   ID_USUARIO_LOG       VARCHAR(5)            not null,
-   constraint PK_CUENTA primary key (ID_CUENTA)
-);
-
-/*==============================================================*/
-/* Table: CUENTA_CLIENTES                                       */
-/*==============================================================*/
-create table CUENTA_CLIENTES (
-   ID_CUENTA_CLIENTES   CHAR(10)              not null,
-   ID_CUENTA            NUMBER(15)            not null,
-   FECHA                TIMESTAMP WITH TIME ZONE,
-   constraint PK_CUENTA_CLIENTES primary key (ID_CUENTA_CLIENTES, ID_CUENTA)
-);
-
-/*==============================================================*/
-/* Table: CUENTA_CONTROL                                        */
-/*==============================================================*/
-create table CUENTA_CONTROL (
-   ID_CUENTA_MOV_CONTROL NUMBER(5)             not null,
-   FECHA                TIMESTAMP WITH TIME ZONE,
-   constraint PK_CUENTA_CONTROL primary key (ID_CUENTA_MOV_CONTROL)
-);
-
-comment on table CUENTA_CONTROL is
-'CONTROL NUMERACION';
-
-/*==============================================================*/
-/* Table: CUENTA_ESTADO                                         */
-/*==============================================================*/
-create table CUENTA_ESTADO (
-   ID_TIPO_USUARIO      VARCHAR(2)            not null,
-   NOMBRE               VARCHAR(20)           not null,
-   ESTADO               VARCHAR(1)           default 'A'
-      constraint CKC_ESTADO_CUENTA_E check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
-   constraint PK_CUENTA_ESTADO primary key (ID_TIPO_USUARIO)
-);
-
-/*==============================================================*/
-/* Table: CUENTA_MOVIMIENTO                                     */
-/*==============================================================*/
-create table CUENTA_MOVIMIENTO (
-   ID_CUENTA_MOVIMIENTO NUMBER(30)            not null,
-   ID_CUENTA_CONTROL    NUMBER(5)             not null,
-   ID_CUENTA            NUMBER(15)            not null,
-   VALOR                NUMBER(15,2)          not null,
-   constraint PK_CUENTA_MOVIMIENTO primary key (ID_CUENTA_MOVIMIENTO, ID_CUENTA_CONTROL)
-);
-
-/*==============================================================*/
 /* Table: DEPARTAMENTO                                          */
 /*==============================================================*/
 create table DEPARTAMENTO (
@@ -181,29 +156,66 @@ create table DEPARTAMENTO (
 );
 
 /*==============================================================*/
-/* Table: DEPOSITO                                              */
+/* Table: DISTRIBUCION                                          */
 /*==============================================================*/
-create table DEPOSITO (
-   ID_TIPO_USUARIO      VARCHAR(3)            not null,
-   ID_CUENTA_CLIENTES   CHAR(10),
-   ID_CUENTA            NUMBER(15),
-   ID_CLASE_PRODUCTO    VARCHAR(2),
-   ID_DEPOSITO          NUMBER(10)            not null,
-   FECHA                TIMESTAMP WITH LOCAL TIME ZONE,
-   CANTIDAD             FLOAT(200),
-   constraint PK_DEPOSITO primary key (ID_TIPO_USUARIO)
+create table DISTRIBUCION (
+   ID_CARTELERA         VARCHAR(20)           not null,
+   ID_SALA              VARCHAR(5)            not null,
+   ID_FUNCION           VARCHAR(20)           not null,
+   ID_CINE              VARCHAR(20)           not null,
+   ID_DISTRIBUCION      VARCHAR(20)           not null,
+   COORDENADA_X         VARCHAR(20),
+   COORDENADA_Y         VARCHAR(20),
+   TIPOS__PRIN_GER_ADM_ VARCHAR(15),
+   constraint PK_DISTRIBUCION primary key (ID_CARTELERA)
 );
 
 /*==============================================================*/
-/* Table: MONEDA                                                */
+/* Table: DISTRIBUCION_FILMS                                    */
 /*==============================================================*/
-create table MONEDA (
-   ID_TIPO_USUARIO      VARCHAR(3)            not null,
-   ID_PAIS              VARCHAR(3),
-   NOMBRE               VARCHAR(20)           not null,
-   ESTADO               VARCHAR(1)           default 'A'
-      constraint CKC_ESTADO_MONEDA check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
-   constraint PK_MONEDA primary key (ID_TIPO_USUARIO)
+create table DISTRIBUCION_FILMS (
+   ID_FILMS             VARCHAR(20)           not null,
+   ID_DISTRIBUCION      VARCHAR(30)           not null,
+   COORDENADA_X         VARCHAR(30),
+   COORDENAD_Y          VARCHAR(30),
+   constraint PK_DISTRIBUCION_FILMS primary key (ID_FILMS)
+);
+
+/*==============================================================*/
+/* Table: ESTADO                                                */
+/*==============================================================*/
+create table ESTADO (
+   ID_ESTADO            VARCHAR(20)           not null,
+   ID_PRODUCTO          VARCHAR(20)           not null,
+   ID_TEATRO            VARCHAR(20)           not null,
+   ID_ASIENTO           VARCHAR(20)           not null,
+   DESCRIPCION          VARCHAR(200),
+   constraint PK_ESTADO primary key (ID_ESTADO)
+);
+
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   ID_FACTURA           VARCHAR(20)           not null,
+   ID_RESULTADO_FACTURA VARCHAR(20)           not null,
+   ID_RESULTADO         VARCHAR(20)           not null,
+   ID_TEATRO            VARCHAR(20)           not null,
+   VALOR_PAGAR          FLOAT20,
+   ESTADO               VARCHAR(20),
+   constraint PK_FACTURA primary key (ID_FACTURA)
+);
+
+/*==============================================================*/
+/* Table: FUNCION                                               */
+/*==============================================================*/
+create table FUNCION (
+   ID_FUNCION           VARCHAR(20)           not null,
+   ID_FACTURA           VARCHAR(20)           not null,
+   ID_FILMS             VARCHAR(20)           not null,
+   ID_CARTELERA         VARCHAR(20)           not null,
+   PUNTOS               FLOAT20,
+   constraint PK_FUNCION primary key (ID_FUNCION)
 );
 
 /*==============================================================*/
@@ -217,11 +229,33 @@ create table PAIS (
 );
 
 /*==============================================================*/
+/* Table: PELICULA                                              */
+/*==============================================================*/
+create table PELICULA (
+   ID_PELICULA          VARCHAR(10)           not null,
+   NOMBRE               VARCHAR(100)          not null,
+   ESTADO               VARCHAR(1)           default 'A'
+      constraint CKC_ESTADO_PELICULA check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
+   constraint PK_PELICULA primary key (ID_PELICULA)
+);
+
+/*==============================================================*/
+/* Table: PELICULA_CARTELERA                                    */
+/*==============================================================*/
+create table PELICULA_CARTELERA (
+   ID_CARTELERA         VARCHAR(10)           not null,
+   ID_PELICULA          VARCHAR(10)           not null,
+   constraint PK_PELICULA_CARTELERA primary key (ID_CARTELERA, ID_PELICULA)
+);
+
+/*==============================================================*/
 /* Table: PRODUCTO                                              */
 /*==============================================================*/
 create table PRODUCTO (
-   ID_PRODUCTO          CHAR(10)              not null,
-   ID_CLASE_PRODUCTO    VARCHAR(2),
+   ID_PRODUCTO          VARCHAR(20)           not null,
+   ID_FACTURA           VARCHAR(20)           not null,
+   NOMBRE               VARCHAR(20),
+   ESTADO               VARCHAR(20),
    constraint PK_PRODUCTO primary key (ID_PRODUCTO)
 );
 
@@ -237,15 +271,49 @@ create table RED_SOCIAL (
 );
 
 /*==============================================================*/
-/* Table: RETIRO                                                */
+/* Table: RESERVA                                               */
 /*==============================================================*/
-create table RETIRO (
-   ID_CUENTA            NUMBER(15)            not null,
-   ID_TIPO_USUARIO      VARCHAR(3)            not null,
-   ID_RETIRO            NUMBER(10)            not null,
-   FECHA                TIMESTAMP WITH LOCAL TIME ZONE,
-   CANTIDAD             FLOAT(200),
-   constraint PK_RETIRO primary key (ID_CUENTA)
+create table RESERVA (
+   ID_RESERVA           VARCHAR(20)           not null,
+   ID_CLIENTE           NUMBER(20),
+   ID_CIUDAD            CHAR(20)              not null,
+   HORA                 TIMESTAMP WITH TIME ZONE,
+   UBICACION            VARCHAR(20),
+   MEDIO_PAGO           VARCHAR(20),
+   constraint PK_RESERVA primary key (ID_RESERVA)
+);
+
+/*==============================================================*/
+/* Table: RESULTADO                                             */
+/*==============================================================*/
+create table RESULTADO (
+   ID_RESULTADO         VARCHAR(20)           not null,
+   ESTADO               VARCHAR(20),
+   MOMENTO              VARCHAR(20),
+   constraint PK_RESULTADO primary key (ID_RESULTADO)
+);
+
+/*==============================================================*/
+/* Table: RESULTAOD_FACTURA                                     */
+/*==============================================================*/
+create table RESULTAOD_FACTURA (
+   ID_RESULTADO_FACTURA VARCHAR(20)           not null,
+   ID_RESULTADO         VARCHAR(20)           not null,
+   ID_TEATRO            VARCHAR(20)           not null,
+   ID_PRODUCTO          VARCHAR(20)           not null,
+   VALORES              FLOAT20,
+   constraint PK_RESULTAOD_FACTURA primary key (ID_RESULTADO_FACTURA)
+);
+
+/*==============================================================*/
+/* Table: TEATRO                                                */
+/*==============================================================*/
+create table TEATRO (
+   ID_TEATRO            VARCHAR(20)           not null,
+   ID_SALA              VARCHAR(20)           not null,
+   NOMBRE               CHAR(20),
+   ESTADO               VARCHAR(20),
+   constraint PK_TEATRO primary key (ID_TEATRO)
 );
 
 /*==============================================================*/
@@ -261,35 +329,12 @@ create table TIPO_ALGORITMO (
 );
 
 /*==============================================================*/
-/* Table: TIPO_CUENTA                                           */
-/*==============================================================*/
-create table TIPO_CUENTA (
-   ID_TIPO_CUENTA       VARCHAR(2)            not null,
-   ID_CLASE_PRODUCTO    VARCHAR(2),
-   NOMBRE               VARCHAR(20)           not null,
-   ESTADO               VARCHAR(1)           default 'A'
-      constraint CKC_ESTADO_TIPO_CUE check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
-   constraint AK_KEY_2_TIPO_CUE unique (ID_TIPO_CUENTA)
-);
-
-/*==============================================================*/
 /* Table: TIPO_DOCUMENTO                                        */
 /*==============================================================*/
 create table TIPO_DOCUMENTO (
    ID_TD                VARCHAR(2)            not null,
    NOMBRE               VARCHAR(20)           not null,
    constraint PK_TIPO_DOCUMENTO primary key (ID_TD)
-);
-
-/*==============================================================*/
-/* Table: TIPO_EMBARGO                                          */
-/*==============================================================*/
-create table TIPO_EMBARGO (
-   ID_TIPO_USUARIO      VARCHAR(2)            not null,
-   NOMBRE               VARCHAR(20)           not null,
-   ESTADO               VARCHAR(1)           default 'A'
-      constraint CKC_ESTADO_TIPO_EMB check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
-   constraint PK_TIPO_EMBARGO primary key (ID_TIPO_USUARIO)
 );
 
 /*==============================================================*/
@@ -301,20 +346,6 @@ create table TIPO_USUARIO (
    ESTADO               VARCHAR(1)           default 'A'
       constraint CKC_ESTADO_TIPO_USU check (ESTADO is null or (ESTADO in ('A','I') and ESTADO = upper(ESTADO))),
    constraint PK_TIPO_USUARIO primary key (ID_TIPO_USUARIO)
-);
-
-/*==============================================================*/
-/* Table: TRANSACCION                                           */
-/*==============================================================*/
-create table TRANSACCION (
-   ID_CLIENTE           NUMBER(20)            not null,
-   ID_CUENTA            NUMBER(15)            not null,
-   ID_TRANSACCION       FLOAT(200)            not null,
-   NUMERO_CUENTA        NUMBER(10),
-   FECHA_TRANSACION     TIMESTAMP WITH TIME ZONE  not null,
-   CUENTA_DESTINO       NUMBER(10),
-   MONTO                FLOAT(200)            not null,
-   constraint PK_TRANSACCION primary key (ID_CLIENTE, ID_CUENTA, ID_TRANSACCION)
 );
 
 /*==============================================================*/
@@ -335,6 +366,36 @@ create table USUARIO (
    FECHA_ACTUALIZACION  TIMESTAMP WITH TIME ZONE,
    constraint PK_USUARIO primary key (ID_USUARIO)
 );
+
+/*==============================================================*/
+/* Table: USUARIO_CINE                                          */
+/*==============================================================*/
+create table USUARIO_CINE (
+   ID_USUARIO           VARCHAR(5)            not null,
+   ID_CINE              VARCHAR(5)            not null,
+   ESTADO               VARCHAR(1)           default 'A'  not null
+      constraint CKC_ESTADO_USUARIO_ check (ESTADO in ('A','I') and ESTADO = upper(ESTADO)),
+   FECHA_REGISTRO       TIMESTAMP WITH TIME ZONE  not null,
+   FECHA_ACTUALIZACION  TIMESTAMP WITH TIME ZONE,
+   ID_USUARIO_LOG       VARCHAR(5)            not null,
+   constraint PK_USUARIO_CINE primary key (ID_USUARIO, ID_CINE)
+);
+
+alter table CINE
+   add constraint FK_CINE_REFERENCE_CIUDAD foreign key (ID_CIUDAD)
+      references CIUDAD (ID_CIUDAD);
+
+alter table CINE_CARTELERAS
+   add constraint FK_CINE_CAR_REFERENCE_CINE foreign key (ID_CINE)
+      references CINE (ID_CINE);
+
+alter table CINE_SALAS
+   add constraint FK_CINE_SAL_REFERENCE_TEATRO foreign key (ID_TEATRO)
+      references TEATRO (ID_TEATRO);
+
+alter table CINE_SALAS
+   add constraint FK_CINE_SAL_REFERENCE_CINE foreign key (ID_CINE)
+      references CINE (ID_CINE);
 
 alter table CIUDAD
    add constraint FK_CIUDAD_REFERENCE_DEPARTAM foreign key (ID_DEPTO)
@@ -372,77 +433,57 @@ alter table CLIENTE_TELEFONOS
    add constraint FK_CLIENTE_TEL_REF_CLIENTE foreign key (ID_CLIENTE)
       references CLIENTE (ID_CLIENTE);
 
-alter table CUENTA
-   add constraint FK_CUENTA_REFERENCE_TIPO_CUE foreign key (ID_TIPO_CUENTA)
-      references TIPO_CUENTA (ID_TIPO_CUENTA);
-
-alter table CUENTA
-   add constraint FK_CUENTA_REFERENCE_PAIS foreign key (ID_PAIS)
-      references PAIS (ID_PAIS);
-
-alter table CUENTA
-   add constraint FK_CUENTA_REFERENCE_TIPO_EMB foreign key (ID_TIPO_USUARIO)
-      references TIPO_EMBARGO (ID_TIPO_USUARIO);
-
-alter table CUENTA
-   add constraint FK_CUENTA_REFERENCE_CUENTA_E foreign key (CUE_ID_TIPO_USUARIO)
-      references CUENTA_ESTADO (ID_TIPO_USUARIO);
-
-alter table CUENTA
-   add constraint FK_CUENTA_REFERENCE_MONEDA foreign key (MON_ID_TIPO_USUARIO)
-      references MONEDA (ID_TIPO_USUARIO);
-
-alter table CUENTA_CLIENTES
-   add constraint FK_CUENTA_C_REFERENCE_CUENTA foreign key (ID_CUENTA)
-      references CUENTA (ID_CUENTA);
-
-alter table CUENTA_MOVIMIENTO
-   add constraint FK_CUENTA_M_REFERENCE_CUENTA_C foreign key (ID_CUENTA_CONTROL)
-      references CUENTA_CONTROL (ID_CUENTA_MOV_CONTROL);
-
-alter table CUENTA_MOVIMIENTO
-   add constraint FK_CUENTA_M_REFERENCE_CUENTA foreign key (ID_CUENTA)
-      references CUENTA (ID_CUENTA);
-
 alter table DEPARTAMENTO
    add constraint FK_DEPARTAM_REFERENCE_PAIS foreign key (ID_PAIS)
       references PAIS (ID_PAIS);
 
-alter table DEPOSITO
-   add constraint FK_DEPOSITO_REFERENCE_CUENTA_C foreign key (ID_CUENTA_CLIENTES, ID_CUENTA)
-      references CUENTA_CLIENTES (ID_CUENTA_CLIENTES, ID_CUENTA);
+alter table DISTRIBUCION
+   add constraint FK_DISTRIBU_REFERENCE_FUNCION foreign key (ID_FUNCION)
+      references FUNCION (ID_FUNCION);
 
-alter table DEPOSITO
-   add constraint FK_DEPOSITO_REFERENCE_CLASE_PR foreign key (ID_CLASE_PRODUCTO)
-      references CLASE_PRODUCTO (ID_CLASE_PRODUCTO);
+alter table DISTRIBUCION
+   add constraint FK_DISTRIBU_REFERENCE_CINE_SAL foreign key (ID_SALA)
+      references CINE_SALAS (ID_SALA);
 
-alter table MONEDA
-   add constraint FK_MONEDA_REFERENCE_PAIS foreign key (ID_PAIS)
-      references PAIS (ID_PAIS);
+alter table ESTADO
+   add constraint FK_ESTADO_REFERENCE_PRODUCTO foreign key (ID_PRODUCTO)
+      references PRODUCTO (ID_PRODUCTO);
+
+alter table ESTADO
+   add constraint FK_ESTADO_REFERENCE_ASIENTO foreign key (ID_ASIENTO)
+      references ASIENTO (ID_ASIENTO);
+
+alter table ESTADO
+   add constraint FK_ESTADO_REFERENCE_TEATRO foreign key (ID_TEATRO)
+      references TEATRO (ID_TEATRO);
+
+alter table FACTURA
+   add constraint FK_FACTURA_REFERENCE_RESULTAO foreign key (ID_RESULTADO_FACTURA)
+      references RESULTAOD_FACTURA (ID_RESULTADO_FACTURA);
+
+alter table FUNCION
+   add constraint FK_FUNCION_REFERENCE_DISTRIBU foreign key (ID_FILMS)
+      references DISTRIBUCION_FILMS (ID_FILMS);
+
+alter table PELICULA_CARTELERA
+   add constraint FK_PELICULA_REFERENCE_CINE_CAR foreign key (ID_CARTELERA)
+      references CINE_CARTELERAS (ID_CARTELERA);
+
+alter table PELICULA_CARTELERA
+   add constraint FK_PELICULA_REFERENCE_PELICULA foreign key (ID_PELICULA)
+      references PELICULA (ID_PELICULA);
 
 alter table PRODUCTO
-   add constraint FK_PRODUCTO_REFERENCE_CLASE_PR foreign key (ID_CLASE_PRODUCTO)
-      references CLASE_PRODUCTO (ID_CLASE_PRODUCTO);
+   add constraint FK_PRODUCTO_REFERENCE_FACTURA foreign key (ID_FACTURA)
+      references FACTURA (ID_FACTURA);
 
-alter table RETIRO
-   add constraint FK_RETIRO_REFERENCE_CUENTA foreign key (ID_CUENTA)
-      references CUENTA (ID_CUENTA);
-
-alter table RETIRO
-   add constraint FK_RETIRO_REFERENCE_MONEDA foreign key (ID_TIPO_USUARIO)
-      references MONEDA (ID_TIPO_USUARIO);
-
-alter table TIPO_CUENTA
-   add constraint FK_TIPO_CUE_REFERENCE_CLASE_PR foreign key (ID_CLASE_PRODUCTO)
-      references CLASE_PRODUCTO (ID_CLASE_PRODUCTO);
-
-alter table TRANSACCION
-   add constraint FK_TRANSACC_REFERENCE_CLIENTE foreign key (ID_CLIENTE)
+alter table RESERVA
+   add constraint FK_RESERVA_REFERENCE_CLIENTE foreign key (ID_CLIENTE)
       references CLIENTE (ID_CLIENTE);
 
-alter table TRANSACCION
-   add constraint FK_TRANSACC_REFERENCE_CUENTA foreign key (ID_CUENTA)
-      references CUENTA (ID_CUENTA);
+alter table RESULTAOD_FACTURA
+   add constraint FK_RESULTAO_REFERENCE_RESULTAD foreign key (ID_RESULTADO)
+      references RESULTADO (ID_RESULTADO);
 
 alter table USUARIO
    add constraint FK_USUARIO_REFERENCE_TIPO_USU foreign key (ID_TIPO_USUARIO)
@@ -452,3 +493,10 @@ alter table USUARIO
    add constraint FK_USUARIO_REFERENCE_TIPO_ALG foreign key (ID_TIPO_ALGORITMO)
       references TIPO_ALGORITMO (ID_TIPO_ALGORITMO);
 
+alter table USUARIO_CINE
+   add constraint FK_USUARIO__REFERENCE_USUARIO foreign key (ID_USUARIO)
+      references USUARIO (ID_USUARIO);
+
+alter table USUARIO_CINE
+   add constraint FK_USUARIO__REFERENCE_CINE foreign key (ID_CINE)
+      references CINE (ID_CINE);
