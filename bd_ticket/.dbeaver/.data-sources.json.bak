@@ -1,0 +1,32 @@
+{
+	"folders": {},
+	"connections": {
+		"postgres-jdbc-18791cf84af-342a2568f7e0f0fe": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "pg postgres/banco",
+			"save-password": true,
+			"configuration": {
+				"host": "localhost",
+				"port": "5432",
+				"database": "banco",
+				"url": "jdbc:postgresql://localhost:5432/banco",
+				"configurationType": "MANUAL",
+				"home": "postgresql_client",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
