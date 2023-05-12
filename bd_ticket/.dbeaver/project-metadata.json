@@ -1,1 +1,1 @@
-{"resources":{"Scripts/pg_create_scheme_user.sql":{"default-datasource":"postgres-jdbc-18791cfbb39-48c77c28e893bbdf","default-catalog":"postgres","default-schema":"public"}}}
+{"resources":{"Scripts/pg_crear_bd_v0.1.0.sql":{"default-datasource":"postgres-jdbc-1879235982a-21d09f92b92abaef","default-catalog":"banco","default-schema":"public"},"Scripts/pg_create_scheme_user.sql":{"default-datasource":"postgres-jdbc-18791cfbb39-48c77c28e893bbdf","default-catalog":"postgres","default-schema":"public"}}}
