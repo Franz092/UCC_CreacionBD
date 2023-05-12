@@ -4695,7 +4695,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:CreationDate>1681774912</a:CreationDate>
 <a:ModificationDate>1681782535</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((61650,-23059), (81372,-16617))</a:Rect>
+<a:Rect>((61766,-23059), (81256,-16617))</a:Rect>
 <a:LineColor>12615680</a:LineColor>
 <a:FillColor>16570034</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -5531,7 +5531,7 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>ID_TAJETA_DE_DEBITO</a:Code>
 <a:CreationDate>1681779681</a:CreationDate>
 <a:Creator>franc</a:Creator>
-<a:ModificationDate>1681782985</a:ModificationDate>
+<a:ModificationDate>1681779756</a:ModificationDate>
 <a:Modifier>franc</a:Modifier>
 <a:DataType>VARCHAR(20)</a:DataType>
 <a:Length>20</a:Length>
@@ -5543,11 +5543,10 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>NOMBRE_DE_LA_IDENTIDAD</a:Code>
 <a:CreationDate>1681779681</a:CreationDate>
 <a:Creator>franc</a:Creator>
-<a:ModificationDate>1681782996</a:ModificationDate>
+<a:ModificationDate>1681779756</a:ModificationDate>
 <a:Modifier>franc</a:Modifier>
 <a:DataType>VARCHAR(50)</a:DataType>
 <a:Length>50</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o108">
 <a:ObjectID>569FB09B-BD19-434B-82C6-53F2F25A185F</a:ObjectID>
@@ -5555,11 +5554,10 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>NOMBRE_DEL_TITULAR</a:Code>
 <a:CreationDate>1681779681</a:CreationDate>
 <a:Creator>franc</a:Creator>
-<a:ModificationDate>1681782996</a:ModificationDate>
+<a:ModificationDate>1681779756</a:ModificationDate>
 <a:Modifier>franc</a:Modifier>
 <a:DataType>VARCHAR(50)</a:DataType>
 <a:Length>50</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o109">
 <a:ObjectID>547E820F-6834-4B2D-ACD4-D165E5D0D02A</a:ObjectID>
@@ -5580,11 +5578,8 @@ LABL 0 Arial,8,N</a:FontList>
 <a:Code>TAJETA_DE_CREDITO</a:Code>
 <a:CreationDate>1681779756</a:CreationDate>
 <a:Creator>franc</a:Creator>
-<a:ModificationDate>1681782985</a:ModificationDate>
+<a:ModificationDate>1681782923</a:ModificationDate>
 <a:Modifier>franc</a:Modifier>
-<c:Key.Columns>
-<o:Column Ref="o106"/>
-</c:Key.Columns>
 </o:Key>
 </c:Keys>
 <c:PrimaryKey>
