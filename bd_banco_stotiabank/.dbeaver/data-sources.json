@@ -36,7 +36,10 @@
 					"@dbeaver-connection-type@": "BASIC",
 					"@dbeaver-sid-service@": "SID"
 				},
-				"auth-model": "oracle_native"
+				"auth-model": "oracle_native",
+				"bootstrap": {
+					"defaultSchema": "STOTIABANK"
+				}
 			}
 		}
 	},
